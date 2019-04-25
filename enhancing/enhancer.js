@@ -13,11 +13,25 @@ function succeed(item) {
     : { ...item };
 }
 
-console.log(succeed({ enhancement: 1 }));
-
 //FAIL
+
+// - If the item's enhancement is less than 15, the durability of the item is decreased by 5.
+// - If the item's enhancement is 15 or more, the durability of the item is decreased by 10.
+// - If the item's enhancement level is greater than 16, the enhancement level decreases by 1 (17 goes down to 16, 18 goes down to 17).
+
 function fail(item) {
-  return { ...item };
+  let oldEnhancement = item.enhancement;
+  let oldDurability = item.durability;
+
+  oldEnhancement < 15
+    ? (item = { ...item, durability: oldDurability - 5 })
+    : (item = { ...item, durability: oldDurability - 10 });
+
+  oldEnhancement > 16
+    ? (item = { ...item, enhancement: oldEnhancement - 1 })
+    : item;
+
+  return item;
 }
 
 //REPAIR
